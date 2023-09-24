@@ -9,17 +9,16 @@ import "forge-std/console.sol";
 contract GodTest is Test {
     God public god;
 
-    address public constant safe = 0x983188C8617C7C4AE49f8C0D51e98B1C738dA830;
-    address public constant xsafe = 0x8ccF9A42fACA5a2FB46E4F0456AA8F3C8FABAf95;
-    address public constant counter = 0x61C609Bbc8e6D7393D5393D2020b9945cc8391c2;
+    address public constant safe = 0x983188C8617C7C4AE49f8C0D51e98B1C738dA830;  //goerli safe
+    address public constant counter = 0x49A33490734f465802Dcb88a903401e9d0Ec779d;
     address public constant web2Account = 0x8ccF9A42fACA5a2FB46E4F0456AA8F3C8FABAf95;
 
-    bytes32 public constant txHash = 0x9f1b56b8d8932a1a7f54e92384b57a6dc9b7dab3e81be2f5c77788d719fe7a44;
+    bytes32 public constant txHash = 0x850addde9c1274e33b9b322362763eb09e8f5cffb8b28614e755f80acc31ea5c;
     uint256 public constant signer1PK = 0xd55d4f99fa717b429bdab48b348a34a4ac0ff90dbafa9625a37062e74f56348f;
     uint256 public constant signer2PK = 0xdf5318b2db8ff656a13adad07e1691df8f1a29e101f6f48d14392c00503d9dd5;
 
     function setUp() public {
-        god = new God(safe, xsafe);
+        god = new God(safe, web2Account);
     }
 
     function test_execTx() public {
@@ -43,7 +42,9 @@ contract GodTest is Test {
         // bytes memory sig1 = bytes("a99c372658c1e1dd46eb53cbdf36bcb364be2c611952bcb0bce8201c18e651206acf02f7167d3b6d1c997e38975c68bfc9ae6ddfb36e21423ad25f09e7a864a21c");
         // bytes memory sig2 = bytes(0x43c0b9f2f69176d7fe24c5f6bf191c5da75b164f0a2270c5c02a741c665b71b6063bedf8be6191263c56b4b29c8beeb9b2f4351a8bf31ba52112038f5ad447901b);
 
-        bytes memory sigs = bytes.concat(sig1, sig2);
+        // bytes memory sigs = bytes.concat(sig1, sig2);
+        bytes memory sigs = bytes.concat(sig2, sig1);
+
         
         console.log("\n\n\nsigs:");
         console.logBytes(sigs);

@@ -5,6 +5,8 @@ import {OwnerManager} from "./base/OwnerManager.sol";
 import {Enum} from "./common/Enum.sol";
 import {ISafe} from "./interfaces/ISafe.sol";
 
+import "forge-std/console.sol";
+
 contract God {
 
     bytes32 private constant DOMAIN_SEPARATOR_TYPEHASH =
@@ -37,13 +39,15 @@ contract God {
     ) public payable virtual returns (bool) {
         // 1. Check sender
         require(msg.sender == xSafe, "Unauthorized.");
+
+        nonce++;
         
         // 2. Check signatures
         bytes32 txHash = getTransactionHash(
             app,
             value,
             data,
-            1
+            nonce
         );
 
         address currentOwner;
@@ -58,7 +62,7 @@ contract God {
             (v, r, s) = signatureSplit(signatures, i);
             currentOwner = ecrecover(txHash, v, r, s);
             bool isOwner = ISafe(safe).isOwner(currentOwner);
-            require(isOwner, "Unauthorized.");
+            require(isOwner, "Not Owner.");
         }
         
         // 3. Execute transaction
