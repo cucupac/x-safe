@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import {OwnerManager} from "./base/OwnerManager.sol";
+import {Enum} from "./common/Enum.sol";
+import {ISafe} from "./interfaces/ISafe.sol";
+
 contract God {
     // keccak256(
     //     "EIP712Domain(address verifyingContract)"
@@ -12,6 +16,40 @@ contract God {
     //     ""SafeTx(address to,uint256 value,bytes data,uint256 nonce)""
     // );
     bytes32 private constant SAFE_TX_TYPEHASH = 0x66f22472c9f42fa1a5d7e86b0d9391ec47830a4ec8e1a2780ea24f00067ae39b;
+    
+    uint256 public nonce;
+    address public immutable xSafe;
+    address public immutable safe;
+
+    constructor(address _safe, address _xSafe) {
+        safe = _safe;
+        xSafe = _xSafe;
+    }
+
+    function execTx(
+        address app,
+        uint256 value,
+        bytes calldata data,
+        bytes memory signatures
+    ) public payable virtual returns (bool success) {
+        // 1. Check sender
+        require(msg.sender == xSafe, "Unauthorized.");
+        // 2. Check signatures
+        bytes32 txHash;
+        // Use scope here to limit variable lifetime and prevent `stack too deep` errors
+        {
+            txHash = getTransactionHash( // Transaction info
+                app,
+                value,
+                data,
+                nonce++
+            );
+            ISafe(safe).checkSignatures(txHash, "", signatures);
+        }
+        // 3. Execute transaction
+       ISafe(safe).execTransactionFromModule(app, value, data, Enum.Operation.Call);
+        return true;
+    }
 
     /**
      * @dev Returns the domain separator for this contract, as defined in the EIP-712 standard.
