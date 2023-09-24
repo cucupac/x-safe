@@ -12,6 +12,10 @@ interface ISafe {
         bytes memory data,
         Enum.Operation operation
     ) external returns (bool success);
+
+    function isOwner(address owner) external returns (bool);
+
+    function getThreshold() external returns (uint256);
 }
 
 
