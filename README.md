@@ -1,6 +1,8 @@
 ## X-Safe: Cross-Chain Gnosis Safe Multi-Sig Optimization
 
-### [XSafe | ETHGlobal New York 2023 Winners](https://ethglobal.com/showcase/xsafe-bbj01)
+### [XSafe | ETHGlobal New York 2023](https://ethglobal.com/showcase/xsafe-bbj01)
+
+### WINNER OF 🥉 Safe — Best Use of Safe{Core},🏆 ETHGlobal New York 2023 Finalist
 
 ### Overview
 X-Safe aims to optimize the Gnosis Safe multi-sig framework for multi-chain transactions. It simplifies identical administrative functions on multiple blockchains by enabling single signature propagation and transaction broadcasting.
