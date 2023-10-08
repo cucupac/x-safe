@@ -14,8 +14,8 @@ contract GodTest is Test {
     address public constant web2Account = 0x8ccF9A42fACA5a2FB46E4F0456AA8F3C8FABAf95;
 
     bytes32 public constant txHash = 0x252f474661272b6f9a5cef3a5660f313785eb5466aa00b18f5b74ad4b4c96620;
-    uint256 public constant signer1PK = 0xd55d4f99fa717b429bdab48b348a34a4ac0ff90dbafa9625a37062e74f56348f;
-    uint256 public constant signer2PK = 0xdf5318b2db8ff656a13adad07e1691df8f1a29e101f6f48d14392c00503d9dd5;
+    uint256 public constant signer1PK = ; //redacted
+    uint256 public constant signer2PK = ; //redacted
 
     function setUp() public {
         god = new God(safe, web2Account);
